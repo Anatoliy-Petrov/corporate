@@ -39,7 +39,7 @@
                     <label for="2" class="title mcol-xs-12 mcol-sm-4">{{ __('main.archive_actions') }}</label>
                     <select name="archive" id="archive" data-placeholder="Все" class="mcol-xs-12 mcol-sm-4">
                         <option value="all">{{ __('main.all') }}</option>
-                        @foreach($archive as $item)
+                        @foreach($archive as $key=>$item)
                             <option value="{{ \Jenssegers\Date\Date::parse($item->created_at)->format('Y-m') }}" @if(array_get($request, 'archive') == \Jenssegers\Date\Date::parse($item->created_at)->format('Y-m')) {{ 'selected' }} @endif>{{ \Jenssegers\Date\Date::parse($item->created_at)->format('F Y') }}</option>
                         @endforeach
                     </select>
@@ -67,12 +67,16 @@
 
                                 <img src="{{ '/storage/images/action/'. $action->photo }}" alt="action">
                             </div>
-
-                            <div class="description-container flex column">
-                                <h4 class="title article-title"><a href="{{ route('actions.show',  $action->alias) }}">{{ $action['title_'.$locale] }}</a></h4>
+                            <div class="description-container">
                                 <div class="description">
-                                    <p class="bold">{{ __('main.from') }} {{ \Jenssegers\Date\Date::parse($action->start_at)->format('d F ') }} {{ __('main.to') }} {{ \Jenssegers\Date\Date::parse($action->finish_at)->format('d F Y') }}</p>
+                                    <p class="row-with-icon date">
+                                        <i class="icomoon icon-calendar"></i>
+                                        <span class="text semi-bold">
+                                        c {{ \Jenssegers\Date\Date::parse($action->start_at)->format('d F') }} по {{ \Jenssegers\Date\Date::parse($action->finish_at)->format('d F Y') }}
+                                    </span>
+                                    </p>
                                 </div>
+                                <h4 class="title article-title"><a href="{{ route('actions.show', ['actions' => $action->alias]) }}">{{ $action['title_'.$locale] }}</a></h4>
                             </div>
                         </div>
                     </article>

@@ -14,7 +14,7 @@ class ReportController extends Controller
 {
     public function index(Request $request)
     {
-        $paginate = 10;
+        $paginate = 15;
         $page = $request->has('page') ? $request->page*$paginate-$paginate : 0;
         $reports = Report::paginate($paginate);
 
@@ -45,11 +45,20 @@ class ReportController extends Controller
 
     private function saveReport(CommonRequest $request, $report)
     {
-        $input = $request->except('_token', '_method', 'documents', 'image');
+        $input = $request->except('_token', '_method', 'documents', 'image', 'url', 'document_titles');
         $input['alias'] = $request->alias ? $request->alias : str_slug($request->title_ru);
 
         if ($request->has('image')) {
             $input['certificate'] = $report->saveCertifecate($request->image, 'reports', 2000);
+        }
+        if ($request->has('document_titles')) {
+            foreach ($request->document_titles as $document_id => $document_title){
+//                if ($document_title){
+//                    Document::whereId($document_id)->update(['title' => $document_title]);
+//                }
+                Document::whereId($document_id)->update(['title' => $document_title]);
+            }
+
         }
         $report->fill($input);
         $report->save();
@@ -75,7 +84,7 @@ class ReportController extends Controller
 
         $this->saveReport($request, $report);
 
-        return redirect()->route('reports.index')
+        return redirect($request->url)
             ->with(['message' => 'Отчет сохранён', 'class' => 'success']);
     }
 

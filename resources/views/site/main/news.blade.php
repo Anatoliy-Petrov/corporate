@@ -33,13 +33,19 @@
                                     <i class="icomoon standard-arrow-icon"></i>
                                 </div>
                             </div>
-                            <img src="{{ asset('storage/images/news/'.$item->image) }}" alt="{{ $item->title_ru }}">
+                            @isset($item->image_small)
+                                <img src="{{ '/storage/images/news/'.$item->image_small }}" alt="{{ $item->title_ru }}">
+                            @elseif($item->image)
+                                <img src="{{ '/storage/images/news/thumbnails/'.$item->image }}" alt="{{ $item->title_ru }}">
+                            @else
+                                <img src="{{ asset('img/no_image_news.jpg') }}" alt="{{ $item->title_ru }}">
+                            @endisset
                         </div>
 
                         <div class="description-container flex column">
                             <h4 class="title article-title"><a href="{{ route('news.show', ['news' => $item->alias]) }}">{{ $item['title_'.$locale] }}</a></h4>
                             <div class="description">
-                                <p class="">{{ mb_strimwidth($item['description_'.$locale], 0, 200) }}</p>
+                                <p class="">{!! mb_strimwidth(strip_tags($item['description_'.$locale]), 0, 200) !!}</p>
                             </div>
                         </div>
                     </div>

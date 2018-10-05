@@ -1,5 +1,7 @@
 @extends('site.layouts.app')
 
+@include('site.includes.meta_tags', array('meta_tags' => $client))
+
 @section('content')
 
     <!-- Start of page code insertion here -->
@@ -20,7 +22,7 @@
                 <div class="sectionBlock contentBlock">
 
                     <div class="contentRow">
-                        <div class="description">
+                        <div class="description mcol-xs-12 mcol-md-7">
                             {!! $client['description_'.$locale] !!}
                         </div>
                     </div>

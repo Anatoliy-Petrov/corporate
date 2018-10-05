@@ -53,6 +53,8 @@ class FeedbackController extends Controller
      */
     public function store(FeedRequest $request)
     {
+
+
         $this->feedback->fill($request->except('_method', '_token'));
 
         if ($this->feedback->save())
@@ -96,13 +98,8 @@ class FeedbackController extends Controller
 
     public function update(FeedRequest $request, $id)
     {
-        $this->feedback->where('id', $id)->update([
-            'body'       => $request->body,
-            'name'       => $request->name,
-            'city'       => $request->city,
-            'published'  => $request->published,
-            'updated_at' => date('Y-m-d H-i-s')
-        ]);
+        $feedback = Feedback::findOrFail($id);
+        $feedback->fill( $request->all() )->save();
 
         return redirect('admin/feedbacks')->with(['message' => 'Отзыв сохранён', 'class' => 'success']);
     }

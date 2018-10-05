@@ -25,6 +25,11 @@
 
             <div class="col-sm-3">
                 <div class="form-group">
+                    <label>Дата</label>
+                    <input name="date" class="form-control datepicker" value="{{ isset($feedback->date) ? $feedback->date : old('date') }}">
+                </div>
+
+                <div class="form-group">
                     <label for="">Состояние</label>
                     <select name="published" id="" class="form-control">
                         <option value="{{ $feedback::PUBLISHED }}" @isset($feedback->published) @if($feedback->published == $feedback::PUBLISHED ) {{ 'selected' }} @endif @endisset >

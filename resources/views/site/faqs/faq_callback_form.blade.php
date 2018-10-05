@@ -8,7 +8,8 @@
                 <input class="border-decor" name="name" type="text" placeholder="{{ trans('main.your_name') }}">
             </div>
             <div class="formRow">
-                <input class="border-decor" type="text" name="phone" placeholder="{{ trans('main.your_phone') }}">
+                <input class="border-decor" name="phone" type="text" placeholder="{{ trans('main.your_phone') }}"
+                       data-validate="required" data-error-text="Поле обязательно к заполнению" required>
             </div>
 
             <div class="submitButtonWrapper">

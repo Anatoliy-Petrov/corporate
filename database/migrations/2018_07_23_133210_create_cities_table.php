@@ -17,7 +17,7 @@ class CreateCitiesTable extends Migration
             $table->increments('id');
             $table->string('title_ru', 255);
             $table->string('title_uk', 255);
-            $table->integer('region_id')->unsigned();
+            $table->unsignedInteger('region_id')->nullable();
             $table->boolean('published');
         });
     }

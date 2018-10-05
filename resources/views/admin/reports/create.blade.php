@@ -16,7 +16,10 @@
            class="form-group"  enctype="multipart/form-data">
 
         {{ csrf_field() }}
-        @if(isset($report)) {{ method_field('put') }} @endif
+        @if(isset($report))
+            {{ method_field('put') }}
+            <input type="hidden" name="url" value="{{ url()->previous() }}">
+        @endif
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
@@ -35,13 +38,23 @@
                                 <div class="form-group">
                                     <label>Заголовок *</label>
                                     <input type="text" name="title_ru" class="form-control"
-                                           value="{{ isset($report) ? $report->title_ru : old('title_ru') }}" >
+                                       @isset($report)
+                                           value="{{ old('title_ru') ? old('title_ru') : $report->title_ru }}"
+                                       @else
+                                           value="{{ old('title_ru') }}"
+                                        @endisset
+                                    >
                                 </div>
 
                                 <div class="form-group">
                                     <label>Текст *</label>
-                                    <textarea name="description_ru" id="description_ru" class="form-control"
-                                              rows="5">{{ isset($report) ? $report->description_ru : old('description_ru') }}</textarea>
+                                    <textarea name="description_ru" id="description_ru" class="form-control" rows="5">
+                                        @isset($report)
+                                            {{ old('description_ru') ? old('description_ru') : $report->description_ru }}
+                                        @else
+                                            {{ old('description_ru') }}
+                                        @endisset
+                                    </textarea>
                                 </div>
                             </div>
                         </div>
@@ -58,13 +71,23 @@
                                 <div class="form-group">
                                     <label>Заголовок *  <small>(украинский вариант)</small></label>
                                     <input type="text" name="title_uk" class="form-control"
-                                           value="{{ isset($report) ? $report->title_uk : old('title_uk') }}">
+                                       @isset($report)
+                                           value="{{ old('title_uk') ? old('title_uk') : $report->title_uk }}"
+                                       @else
+                                           value="{{ old('title_uk') }}"
+                                        @endisset
+                                    >
                                 </div>
 
                                 <div class="form-group">
                                     <label>Текст * <small>(украинский вариант)</small></label>
-                                    <textarea name="description_uk" id="description_ru" class="form-control"
-                                              rows="5">{{ isset($report) ? $report->description_uk : old('description_uk') }}</textarea>
+                                    <textarea name="description_uk" id="description_ru" class="form-control" rows="5">
+                                        @isset($report)
+                                            {{ old('description_uk') ? old('description_uk') : $report->description_uk }}
+                                        @else
+                                            {{ old('description_uk') }}
+                                        @endisset
+                                    </textarea>
                                 </div>
                             </div>
                         </div>
@@ -123,17 +146,24 @@
             </div>
             <div class="col-sm-4">
                 @if(isset($report->documents))
+                    <h6>Вы можете добавить названия документам для красивого отображения</h6>
                     <ul class="list-group">
                         @foreach($report->documents as $document)
-                            <li class="list-group-item admin-document" data-element-id="{{ $document->id }}">
-                                {{ $document->path }}
+                            <li class="list-group-item" data-element-id="{{ $document->id }}">
+                                <div class="row admin-document">
+                                    <span class="col-xs-10">{{ $document->path }}</span>
+                                    <a href="" class="delete col-xs-2" data-delete-url="/admin/documents/{{ $document->id }}" data-element-id="{{ $document->id }}">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <input class="form-control col-xs-12" name="document_titles[{{ $document->id }}]" type="text" value="{{ $document->title or '' }}" placeholder="введите имя документа">
+                                </div>
 
-                                <a href=""  class="delete" data-delete-url="/admin/documents/{{ $document->id }}" data-element-id="{{ $document->id }}">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </a>
                             </li>
+                            <br>
                         @endforeach
-
                     </ul>
                 @endif
             </div>

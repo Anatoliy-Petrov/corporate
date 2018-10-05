@@ -11,7 +11,7 @@
         </div>
 
         <div class="show-all-button-wrapper">
-            <a href="#" class="standardButton secondary border-decor">{{ trans('main.all_actions') }}</a>
+            <a href="{{ route('actions') }}" class="standardButton secondary border-decor">{{ trans('main.all_actions') }}</a>
         </div>
 
         <div class="mrow flex wrap">
@@ -30,17 +30,19 @@
                             </div>
                             <img src="{{ asset('storage/images/action/'.$action->photo) }}" alt="{{ $action->title_ru }}">
                         </div>
-
-                        <div class="description-container flex column">
-                            <h4 class="title article-title"><a href="{{ route('actions.show', ['actions' => $action->alias]) }}">{{ $action['title_'.$locale] }}</a></h4>
+                        <div class="description-container">
                             <div class="description">
-                                <p class="bold">c
-                                    {{ \Jenssegers\Date\Date::parse($action->start_at)->format('d F') }}
-                                     по
-                                    {{ \Jenssegers\Date\Date::parse($action->finish_at)->format('d F Y') }}</p>
+                                <p class="row-with-icon date">
+                                    <i class="icomoon icon-calendar"></i>
+                                    <span class="text semi-bold">
+                                        c {{ \Jenssegers\Date\Date::parse($action->start_at)->format('d F') }} по {{ \Jenssegers\Date\Date::parse($action->finish_at)->format('d F Y') }}
+                                    </span>
+                                </p>
                             </div>
+                            <h4 class="title article-title"><a href="{{ route('actions.show', ['actions' => $action->alias]) }}">{{ $action['title_'.$locale] }}</a></h4>
                         </div>
                     </div>
+
                 </article>
             @empty
             @endforelse

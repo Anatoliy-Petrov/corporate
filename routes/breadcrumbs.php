@@ -12,6 +12,13 @@ Breadcrumbs::for('site.home', function ($trail) use ($locale) {
     $trail->push(trans('main.main'), route('site.home'));
 });
 
+// О компании
+Breadcrumbs::for('about', function ($trail) {
+    $trail->parent('site.home');
+    $trail->push('О компании', route('about'));
+});
+
+
 // Статические страницы
     Breadcrumbs::for('pages.show', function ($trail, $id) use ($locale) {
         $page = Page::findOrFail($id);
@@ -77,15 +84,28 @@ Breadcrumbs::for('site.home', function ($trail) use ($locale) {
         $trail->parent('actions');
         $trail->push($actions['title_' . $locale], route('actions.show', $actions));
     });
-    
+
 //Клиентам
     Breadcrumbs::for('clients', function ($trail) {
         $trail->parent('site.home');
-        $trail->push('Клиентам', route('clients'));
+        $trail->push(trans('main.for_clients'), route('clients'));
     });
 //Клиентам Запись
 Breadcrumbs::for('clients.show', function ($trail, $client) use ($locale) {
     $client = \App\Models\Common\Client::findOrFail($client);
     $trail->parent('clients');
     $trail->push($client['title_' . $locale], route('clients.show', $client));
+});
+
+
+//Отделения
+Breadcrumbs::for('departments', function ($trail) {
+    $trail->parent('site.home');
+    $trail->push(trans('main.offices'), route('departments'));
+});
+
+Breadcrumbs::for('departments.show', function ($trail, $department) use ($locale) {
+    $department = \App\Models\Common\Office::findOrFail($department);
+    $trail->parent('departments');
+    $trail->push(trans('main.office') .' №'. $department->number, route('departments.show', $department));
 });

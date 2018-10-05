@@ -37,6 +37,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     Route::get('/', 'HomeController@index')->name('home');
     Route::delete('/images/{id}', 'ImageController@destroy');
 
+    Route::get('/sitemap', function (){
+        \Illuminate\Support\Facades\Artisan::call('command:sitemap');
+        return back()->with('success', 'Карта сайта успешно обновлена');
+    })->name('sitemap');
+
     require_once('admin/actions.php');
     require_once('admin/tariffs.php');
     require_once('admin/tariff_categories.php');
@@ -59,6 +64,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['aut
     require_once('admin/vacancy_categories.php');
     require_once('admin/vacancy.php');
     require_once('admin/seo.php');
+    require_once('admin/steps.php');
+    require_once('admin/calculator.php');
 
 });
 
@@ -70,7 +77,7 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale(), 'mi
         Route::get('/', 'MainController@index')->name('site.home');
 
         //subscribe
-        Route::get('/main/subscribe', 'MainController@subscribe')->name('subscribe');
+        Route::post('/main/subscribe', 'MainController@subscribe')->name('subscribe');
         Route::get('/subscribers/activate', 'SubscriberController@activate')->name('activate');
         Route::post('/main/discount', 'MainController@discount')->name('main.discount');
 
@@ -109,20 +116,37 @@ Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale(), 'mi
 
         /**клиентам**/
 
-        Route::get('/clients', 'ClientController@index')->name('clients.index');
+        Route::get('/clients', 'ClientController@index')->name('clients');
         Route::get('/clients/{clients}', 'ClientController@show')->name('clients.show');
+
+        /**       оценивание отделений            **/
+
+        Route::get('/departments/{office}/evaluate/{mark}', 'EvaluationController@store')->name('departments.evaluate');
+        Route::put('/evaluations/{evaluation}', 'EvaluationController@update')->name('evaluations.update');
+
+
+        Route::get('/departments', 'DepartmentController@index')->name('departments');
+        Route::get('/departments/get-departments', 'DepartmentController@getDepartments');
+        Route::get('/departments/{id}', 'DepartmentController@show')->name('departments.show');
+
+
+        /**  calculator */
+
+        require_once('site_calculator.php');
 
         // 404
         Route::get('/404', function (){
-            return view('_layouts.404');
+            return response()->view('_layouts.404', [], 404);
         })->name('404');
 
         /** Статические страницы **/
 
         Route::get('/{page}', 'PageController@show')->name('pages.show');
-
     });
+
 });
+
+
 
 //Переключение языков
 Route::get('setlocale/{lang}', function ($lang) {

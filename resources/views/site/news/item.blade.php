@@ -23,7 +23,11 @@
                             </div>
 
                             <div class="main-image imgWrapper">
+                                @isset($news->image)
                                 <img src="{{ '/storage/images/news/'.$news->image }}" alt="img">
+                                @else
+                                    <img src="{{ asset('img/no_image_news.jpg') }}" alt="img">
+                                @endisset
                             </div>
                         </div>
 
@@ -41,15 +45,21 @@
                         <div class="contentRow images-row mrow flex wrap ">
                             @forelse($news->images as $image)
                                 <div class="imgWrapper mcol-xs-6">
-                                    <img src="{{ '/storage/images/news/'.$image->path }}" alt="img">
+                                    <a class="colorbox" href="{{ '/storage/images/news/'.$image->path }}" data-rel="group{{$loop->iteration}}">
+                                        <img src="{{ '/storage/images/news/'.$image->path }}" alt="img">
+                                    </a>
                                 </div>
                             @empty
                             @endforelse
                         </div>
 
-                        <div class="contentRow">
-                            <a href="#" class="link-with-icon"><i class="icomoon icon-youtube"></i> <span>https://www.youtube.com/</span></a>
-                        </div>
+                        @isset($news->youtube_link)
+
+                            <div class="contentRow">
+                                <a target="_blank" href="{{ $news->youtube_link }}" class="link-with-icon"><i class="icomoon icon-youtube"></i> <span>Видео на youtube.com</span></a>
+                            </div>
+                        @endisset
+
                     </div>
 
                 </div>
@@ -63,4 +73,8 @@
     <!-- End of page code insertion here -->
 
 
+@endsection
+
+@section('scripts')
+    <script src="{{asset('js/site/jquery.colorbox.min.js')}}"></script>
 @endsection

@@ -12,9 +12,9 @@ class TariffController extends Controller
 {
     public function index(Request $request)
     {
-        $paginate = 10;
+        $paginate = 15;
         $page = $request->has('page') ? $request->page*$paginate-$paginate : 0;
-        $tariffs = Tariff::published()->with('category')->paginate($paginate);
+        $tariffs = Tariff::with('category')->paginate($paginate);
 
         return view('admin.tariffs.index', compact('tariffs', 'page'));
     }
@@ -55,7 +55,7 @@ class TariffController extends Controller
 
     private function saveTariff(TariffRequest $request, $tariff)
     {
-        $input = $request->except('_token', '_method');
+        $input = $request->except('_token', '_method', 'url');
 
         if ($request->has('image')) {
 

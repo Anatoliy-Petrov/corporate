@@ -3,7 +3,7 @@
         <div class="flex wrap spaceBetween">
             <div class="footer-section social-block mcol-xs-12 mcol-sm-4">
                 <div class="capital-logo-container">
-                    <a href="{{ route('site.home') }}" class="icomoon icon-logo-capital"></a>
+                    <a href="{{ route('site.home') }}" class="icomoon icon-logo-capital2"></a>
                 </div>
 
                 <ul class="social-media-list">
@@ -31,7 +31,7 @@
 
                                 <div class="info-block">
                                     <div class="author semi-bold">{{ $feedback->name }}, {{ $feedback->city }}</div>
-                                    <div class="date">17 апреля 2018</div>
+                                    <div class="date">{{ $feedback->date }}</div>
                                 </div>
                                 <div class="quote-icon bottom"><i class="icomoon icon-quote"></i></div>
                             </div>

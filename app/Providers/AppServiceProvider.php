@@ -42,6 +42,8 @@ class AppServiceProvider extends ServiceProvider
             'news' => \App\Models\Admin\News::class,
             'page' => \App\Models\Admin\Page::class,
             'action' => \App\Models\Admin\Action::class,
+            'request' => \App\Models\Common\Calculator\CalcRequest::class,
+            'gadget_request' => \App\Models\Common\Calculator\CalcGadgetRequest::class
         ]);
     }
     /**

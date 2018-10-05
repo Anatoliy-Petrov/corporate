@@ -8,14 +8,14 @@
                     <a href="{{ route('faqs') }}" class="faq">{{ trans('main.faqs') }}</a>
                 </div>
 
-                <div class="section-element phone mcol-xs-12 mcol-md-auto">
+                <div class="section-element phone phone mcol-md-auto">
                     <i class="icomoon icon-phone mcol-xs-hide mcol-md-show"></i>
-                    <span class="text">{{ trans('main.call_free') }}</span>
                     <span>{{ $settings->phone }}</span>
+                    <span class="text dashed">{{ trans('main.call_free') }}</span>
                 </div>
 
-                <div class="section-element buttonWrapper mcol-xs-6 fluid mcol-md-auto">
-                    <span>{{ trans('main.search') }}</span>
+                <div class="section-element buttonWrapper fluid mcol-md-auto">
+                    {{--<span>{{ trans('main.search') }}</span>--}}
                     <button id="searchButton" type="button" class="searchButton">
                         <i class="icomoon icon-search"></i>
                     </button>
@@ -24,10 +24,10 @@
                 <div class="section-element language">
                     <i class="icomoon icon-language"></i>
                     <ul class="lang-list">
-                        <li {{ $locale === 'ru' ? 'class="active"' : '' }}>
+                        <li {{ $locale === 'ru' ? 'class=active' : '' }}>
                             <a href="{{ route('setlocale', ['lang' => 'ru']) }}">RU</a>
                         </li>
-                        <li {{ $locale === 'uk' ? 'class="active"' : '' }}>
+                        <li {{ $locale === 'uk' ? 'class=active' : '' }}>
                             <a href="{{ route('setlocale', ['lang' => 'uk']) }}">UA</a>
                         </li>
                     </ul>
@@ -61,7 +61,7 @@
 
                     <div class="credit-block">
                         <i class="icomoon icon-calculator"></i>
-                        <a href="#"><span>{{ trans('main.calculate') }}</span> <span>{{ trans('main.credit') }}</span></a>
+                        <a href="{{ route('calculator') }}" @if(Route::is('calculator')) class="active" @endif><span>{{ trans('main.calculate') }}</span> <span>{{ trans('main.credit') }}</span></a>
                     </div>
 
                     <nav id="navMenuWrapper" class="navMenuWrapper hiddenContent scale opacityAnimate">
@@ -71,33 +71,36 @@
                             </div>
 
                             <ul class="navMenu menu-section accordionMenu">
-                                <li class="@@aboutUs"><span class="accordionButton">{{ trans('main.credits') }}</span>
+                                <li><span>{{ trans('main.credits') }}</span>
+                                    <i class="icomoon icon-angle accordionButton"></i>
                                     <div class="submenuWrapper">
                                         <ul class="submenu">
-                                            <li><a href="{{ route('tariffs') }}">{{ trans('main.tariff_plans') }}</a></li>
+                                            <li @if(Route::is('calculator')) class="active" @endif><a href="{{ route('calculator') }}">{{ trans('main.credit_calculator') }}</a></li>
+                                            <li @if( basename(request()->path()) == 'get-credit') class="active" @endif><a href="{{ route('pages.show', ['page' => 'get-credit']) }}">{{ trans('main.how_to_get_credit') }}</a></li>
+                                            <li @if(Route::is('tariffs')) class="active" @endif><a href="{{ route('tariffs') }}">{{ trans('main.tariff_plans') }}</a></li>
+                                            <li @if(Route::is('special.abilities')) class="active" @endif><a href="{{ route('special.abilities') }}">{{ trans('main.special_abilities') }}</a></li>
                                         </ul>
+                                        {{--<ul class="submenu">--}}
+                                            {{--<li><a href="#">{{ trans('main.credit_calculator') }}</a></li>--}}
+                                            {{--<li><a href="#">{{ trans('main.how_to_get_credit') }}</a></li>--}}
+                                            {{--<li @if(Route::is('tariffs')) class="active" @endif><a href="{{ route('tariffs') }}">{{ trans('main.tariff_plans') }}</a></li>--}}
+                                            {{--<li><a href="#">{{ trans('main.special_abilities') }}</a></li>--}}
+                                        {{--</ul>--}}
                                     </div>
                                 </li>
-                                <li class="@@countriesList"><span class="accordionButton">{{ trans('main.offices') }}</span>
+                                <li @if(Route::is('actions')) class="active" @endif><a href="{{ route('actions') }}">{{ trans('main.actions') }}</a></li>
+                                <li @if(Route::is('clients')) class="active" @endif><a href="{{ route('clients') }}">{{ trans('main.for_clients') }}</a></li>
+                                <li @if(Route::is('departments')) class="active" @endif><a href="{{ route('departments') }}">{{ trans('main.offices') }}</a></li>
+                                <li @if( basename(request()->path()) == 'about') class="active" @endif><a href="{{ route('pages.show', ['page' => 'about']) }}">{{ trans('main.about') }}</a>
+                                    <i class="icomoon icon-angle accordionButton"></i>
                                     <div class="submenuWrapper">
                                         <ul class="submenu">
-                                            <li><a href="#">Отделения 1</a></li>
-                                            <li><a href="#">Отделения 2</a></li>
-                                            <li><a href="#">Отделения 3</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="@@stories"><a href="{{ route('actions') }}">{{ trans('main.actions') }}</a></li>
-                                <li class="@@feedback"><a href="/feedback.html">{{ trans('main.for_clients') }}</a></li>
-                                <li class="@@contacts"><a href="{{ route('pages.show', ['page' => 'about']) }}" class="accordionButton">{{ trans('main.about') }}</a>
-                                    <div class="submenuWrapper">
-                                        <ul class="submenu">
-                                            <li><a href="{{ route('pages.show', ['page' => 'contacts']) }}">{{ trans('main.contacts') }}</a></li>
-                                            <li><a href="{{ route('news') }}">{{ trans('main.news') }}</a></li>
-                                            <li><a href="{{ route('reports') }}">{{ trans('main.financial_reports') }}</a></li>
-                                            <li><a href="{{ route('pages.show', ['page' => 'rewards']) }}">{{ trans('main.company_rewards') }}</a></li>
-                                            <li><a href="{{ route('pages.show', ['page' => 'collaboration']) }}">{{ trans('main.collaboration') }}</a></li>
-                                            <li><a href="{{ route('vacancies') }}">{{ trans('main.vacancies') }}</a></li>
+                                            <li @if( basename(request()->path()) == 'contacts') class="active" @endif><a href="{{ route('pages.show', ['page' => 'contacts']) }}">{{ trans('main.contacts') }}</a></li>
+                                            <li @if(Route::is('news')) class="active" @endif><a href="{{ route('news') }}">{{ trans('main.news') }}</a></li>
+                                            <li @if(Route::is('reports')) class="active" @endif><a href="{{ route('reports') }}">{{ trans('main.financial_reports') }}</a></li>
+                                            <li @if( basename(request()->path()) == 'rewards') class="active" @endif><a href="{{ route('pages.show', ['page' => 'rewards']) }}">{{ trans('main.company_rewards') }}</a></li>
+                                            <li @if( basename(request()->path()) == 'collaboration') class="active" @endif><a href="{{ route('pages.show', ['page' => 'collaboration']) }}">{{ trans('main.collaboration') }}</a></li>
+                                            <li @if(Route::is('vacancies')) class="active" @endif><a href="{{ route('vacancies') }}">{{ trans('main.vacancies') }}</a></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -121,7 +124,7 @@
                             </div>
 
                             <div class="menu-section faq-section">
-                                <a href="#">{{ trans('main.faqs') }}</a>
+                                <a href="{{ route('faqs') }}">{{ trans('main.faqs') }}</a>
                             </div>
 
                         </div>

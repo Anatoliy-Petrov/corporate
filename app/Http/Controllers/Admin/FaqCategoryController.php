@@ -11,7 +11,7 @@ class FaqCategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $paginate = 5;
+        $paginate = 15;
         $categories = FaqCategory::paginate($paginate);
         $page = $request->has('page') ? $request->page*$paginate-$paginate : 0;
 

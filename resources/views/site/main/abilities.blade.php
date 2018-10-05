@@ -16,8 +16,7 @@
                     </div>
 
                     <div class="default-icon imgWrapper absolute">
-                        <img src="img/icons/diamond.svg" alt="diamond">
-                        {{--<img src="{{ asset('storage/images/main/'.$ability->image) }}" alt="{{ $ability->title_ru }}">--}}
+                        <img src="{{ asset('storage/images/main/'.$ability->image) }}" alt="{{ $ability->title_ru }}">
                     </div>
 
                     <div class="description-container">

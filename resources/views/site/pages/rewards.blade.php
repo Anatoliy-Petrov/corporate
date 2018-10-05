@@ -3,7 +3,7 @@
 @include('site.includes.meta_tags', array('meta_tags' => $page))
 
 @section('content')
-    <div id="achievements" class="achievementsPage page">
+    <div id="achievements" class="achievementsPage page white-bg">
 
         <div class="mcontainer">
             <section class="pageSection pledgeSection">
@@ -21,51 +21,50 @@
 
                 <div class="sectionBlock">
                     {!! $page['description_'.$locale] !!}
+                    {{--<main class="mrow flex wrap">--}}
 
-                    <main class="mrow flex wrap">
+                        {{--<article class="mcol-xs-12 mcol-sm-6 mcol-md-3">--}}
+                            {{--<div class="achivement item">--}}
+                                {{--<img src="/img/achivement-item_1.png" alt="achivement" class="achivement__img">--}}
+                                {{--<p class="achivement__title">Лидер отрасли 2016</p>--}}
+                            {{--</div>--}}
+                        {{--</article>--}}
 
-                        <article class="mcol-xs-12 mcol-sm-6 mcol-md-3">
-                            <div class="achivement item">
-                                <img src="/img/achivement-item_1.png" alt="achivement" class="achivement__img">
-                                <p class="achivement__title">Лидер отрасли 2016</p>
-                            </div>
-                        </article>
+                        {{--<article class="mcol-xs-12 mcol-sm-6 mcol-md-3">--}}
+                            {{--<div class="achivement item">--}}
+                                {{--<img src="/img/achivement-item.jpg" alt="achivement" class="achivement__img">--}}
+                                {{--<p class="achivement__title">Лидер отрасли 2016</p>--}}
+                            {{--</div>--}}
+                        {{--</article>--}}
 
-                        <article class="mcol-xs-12 mcol-sm-6 mcol-md-3">
-                            <div class="achivement item">
-                                <img src="/img/achivement-item.jpg" alt="achivement" class="achivement__img">
-                                <p class="achivement__title">Лидер отрасли 2016</p>
-                            </div>
-                        </article>
+                        {{--<article class="mcol-xs-12 mcol-sm-6 mcol-md-3">--}}
+                            {{--<div class="achivement item">--}}
+                                {{--<img src="/img/achivement-item.jpg" alt="achivement" class="achivement__img">--}}
+                                {{--<p class="achivement__title">Лидер отрасли 2016</p>--}}
+                            {{--</div>--}}
+                        {{--</article>--}}
 
-                        <article class="mcol-xs-12 mcol-sm-6 mcol-md-3">
-                            <div class="achivement item">
-                                <img src="/img/achivement-item.jpg" alt="achivement" class="achivement__img">
-                                <p class="achivement__title">Лидер отрасли 2016</p>
-                            </div>
-                        </article>
+                        {{--<article class="mcol-xs-12 mcol-sm-6 mcol-md-3">--}}
+                            {{--<div class="achivement item">--}}
+                                {{--<img src="/img/achivement-item.jpg" alt="achivement" class="achivement__img">--}}
+                                {{--<p class="achivement__title">Лидер отрасли 2016</p>--}}
+                            {{--</div>--}}
+                        {{--</article>--}}
 
-                        <article class="mcol-xs-12 mcol-sm-6 mcol-md-3">
-                            <div class="achivement item">
-                                <img src="/img/achivement-item.jpg" alt="achivement" class="achivement__img">
-                                <p class="achivement__title">Лидер отрасли 2016</p>
-                            </div>
-                        </article>
+                        {{--<article class="mcol-xs-12 mcol-sm-6 mcol-md-3">--}}
+                            {{--<div class="achivement item">--}}
+                                {{--<img src="/img/achivement-item.jpg" alt="achivement" class="achivement__img">--}}
+                                {{--<p class="achivement__title">Лидер отрасли 2016</p>--}}
+                            {{--</div>--}}
+                        {{--</article>--}}
 
-                        <article class="mcol-xs-12 mcol-sm-6 mcol-md-3">
-                            <div class="achivement item">
-                                <img src="/img/achivement-item.jpg" alt="achivement" class="achivement__img">
-                                <p class="achivement__title">Лидер отрасли 2016</p>
-                            </div>
-                        </article>
-
-                        <article class="mcol-xs-12 mcol-sm-6 mcol-md-3">
-                            <div class="achivement item">
-                                <img src="/img/achivement-item.jpg" alt="achivement" class="achivement__img">
-                                <p class="achivement__title">Лидер отрасли 2016</p>
-                            </div>
-                        </article>
-                    </main>
+                        {{--<article class="mcol-xs-12 mcol-sm-6 mcol-md-3">--}}
+                            {{--<div class="achivement item">--}}
+                                {{--<img src="/img/achivement-item.jpg" alt="achivement" class="achivement__img">--}}
+                                {{--<p class="achivement__title">Лидер отрасли 2016</p>--}}
+                            {{--</div>--}}
+                        {{--</article>--}}
+                    {{--</main>--}}
                 </div>
             </section>
         </div>

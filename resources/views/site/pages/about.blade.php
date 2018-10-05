@@ -62,7 +62,10 @@
                         @if($loop->first)
                             <div class="gallery-block mcol-xs-12 mcol-sm-6">
                                 <div class="imgWrapper">
-                                    <img src="{{ asset('storage/images/page/'.$image->path) }}" alt="img">
+                                    {{--<img src="{{ asset('storage/images/page/'.$image->path) }}" alt="{{ $page->title_ru }}">--}}
+                                    <a class="colorbox" href="{{ asset('storage/images/page/'.$image->path) }}" data-rel="{{ count($page->images) }}">
+                                        <img src="{{ asset('storage/images/page/'.$image->path) }}" alt="{{ $page->title_ru }}">
+                                    </a>
                                 </div>
                             </div>
                             <div class="gallery-block mcol-xs-12 mcol-sm-6">
@@ -71,7 +74,9 @@
                                         @if(!$loop->first)
                                             <div class="mcol-xs-6">
                                                 <div class="imgWrapper">
-                                                    <img src="{{ asset('storage/images/page/'.$image->path) }}" alt="{{ $page->title_ru or '' }}">
+                                                    <a class="colorbox" href="{{ asset('storage/images/page/'.$image->path) }}" data-rel="{{ count($page->images) }}">
+                                                        <img src="{{ asset('storage/images/page/'.$image->path) }}" alt="{{ $page->title_ru }}">
+                                                    </a>
                                                 </div>
                                             </div>
                                         @endif
@@ -81,40 +86,6 @@
                         @endif
                     @empty
                     @endforelse
-                    {{--<div class="gallery-block mcol-xs-12 mcol-sm-6">--}}
-                        {{--<div class="imgWrapper">--}}
-                            {{--<img src="img/image_mock.jpg" alt="img">--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-
-                    {{--<div class="gallery-block mcol-xs-12 mcol-sm-6">--}}
-                        {{--<div class="mrow flex wrap">--}}
-                            {{--<div class="mcol-xs-6">--}}
-                                {{--<div class="imgWrapper">--}}
-                                    {{--<img src="img/image_mock.jpg" alt="img">--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="mcol-xs-6">--}}
-                                {{--<div class="imgWrapper">--}}
-                                    {{--<img src="img/image_mock.jpg" alt="img">--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="mcol-xs-6">--}}
-                                {{--<div class="imgWrapper">--}}
-                                    {{--<img src="img/image_mock.jpg" alt="img">--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="mcol-xs-6">--}}
-                                {{--<div class="imgWrapper">--}}
-                                    {{--<img src="img/image_mock.jpg" alt="img">--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-
                 </div>
             </div>
         </section>
@@ -122,4 +93,8 @@
 
     <!-- End of page code insertion here -->
 
+@endsection
+
+@section('scripts')
+    {{--<script src="{{asset('js/site/jquery.colorbox.min.js')}}"></script>--}}
 @endsection

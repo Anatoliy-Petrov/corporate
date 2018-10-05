@@ -78,22 +78,23 @@
 
                                                 <div class="description-container flex column">
                                                     <div class="description">
+                                                        <p>{{ $tariff['description_'.$locale] }}</p>
                                                         <ul class="conditions">
-                                                            <li>{{ $tariff['description_'.$locale] }}</li>
                                                             <li><b>{{ $tariff->rate }}</b></li>
                                                             <li><b>{{ $tariff['term_'.$locale] }}</b></li>
-                                                            <li>{{ trans('main.max_term') }}</li>
+                                                            @isset($tariff['term_'.$locale]) <li>{{ trans('main.max_term') }}</li> @endisset
                                                         </ul>
                                                     </div>
 
-                                                    <div class="more-button inversed">
-                                                        <div class="more-button-wrapper">
-                                                            <div class="more-button-container">
-                                                                <a href="#" class="title semi-bold">Рассчитать мой кредит</a>
-                                                                <i class="icomoon standard-arrow-icon inversed"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    @include('site.includes.calculate_button')
+                                                    {{--<div class="more-button inversed">--}}
+                                                        {{--<div class="more-button-wrapper">--}}
+                                                            {{--<div class="more-button-container">--}}
+                                                                {{--<a href="#" class="title semi-bold">Рассчитать мой кредит</a>--}}
+                                                                {{--<i class="icomoon standard-arrow-icon inversed"></i>--}}
+                                                            {{--</div>--}}
+                                                        {{--</div>--}}
+                                                    {{--</div>--}}
                                                 </div>
                                             </div>
 
