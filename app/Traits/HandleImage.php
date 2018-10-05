@@ -29,6 +29,7 @@ trait HandleImage
 
         return $image_name;
     }
+
     public function saveOriginalImage( $file, $dir )
     {
 
@@ -77,6 +78,50 @@ trait HandleImage
 
         return $image_name;
     }
+    public function saveImageFromPath( $file, $dir, $width, $height )
+    {
+        $image_name = strtolower(basename($file));
+
+        if (File::exists(public_path() .$file)){
+            $image = Image::make(public_path() .$file)
+                ->fit($width, $height, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->encode();
+
+            $path = 'public/images/'.$dir.'/'.$image_name;
+
+            Storage::put($path, $image->__toString());
+        }
+
+        return $image_name;
+    }
+
+    public function saveFromPathWithThumbnail( $file, $dir, $width, $height, $thumb_width, $thumb_height )
+    {
+        $image_name = basename($file);
+
+        if (File::exists(public_path() .$file)){
+            $image = Image::make(public_path() .$file)
+                ->fit($width, $height, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->encode();
+            $image_thumb = Image::make(public_path() .$file)
+                ->fit($thumb_width, $thumb_height, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->encode();
+
+            $path = 'public/images/'.$dir.'/'.$image_name;
+            $path_thumb = 'public/images/'.$dir.'/thumbnails/'.$image_name;
+
+            Storage::put($path, $image->__toString());
+            Storage::put($path_thumb, $image_thumb->__toString());
+        }
+
+        return $image_name;
+    }
 
     public function deleteImage($image = null, $dir)
     {
@@ -91,12 +136,15 @@ trait HandleImage
 
     public function deleteWithThumbnail($image, $dir)
     {
-        $path = 'public/images/'.$dir.'/'.$image;
+        $path = '/public/images/'.$dir.'/'.$image;
         $path_thumb = 'public/images/'.$dir.'/thumbnails/'.$image;
 
-        if (File::exists($path)){
+        if (Storage::exists($path)){
             Storage::delete($path);
             Storage::delete($path_thumb);
+            return true;
+        } else {
+            return 'нет такого файла...';
         }
     }
 
@@ -134,5 +182,26 @@ trait HandleImage
         Storage::put($path, $image->__toString());
 
         return $image_name;
+    }
+
+    public function saveRequestImage($file, $dir, $width)
+    {
+        if (Storage::exists($file)){
+
+            $image_name = basename($file);
+
+            // resize image to new width but do not exceed original size
+            $image = Image::make($file)->widen($width, function ($constraint) {
+                $constraint->upsize();
+            })->encode();
+
+            $path = 'public/images/'.$dir.'/'.$image_name;
+
+            Storage::put($path, $image->__toString());
+
+            return $image_name;
+        }
+
+        return false;
     }
 }

@@ -31,7 +31,7 @@
                                         <li>
                                             <a href="{{ route('reports.download', ['path' => $document->path]) }}" class="link-with-icon" alt="скачать">
                                                 <i class="icomoon icon-doc"></i>
-                                                <span><b>{{ $document->path }}</b></span>
+                                                <span><b>{{ $document->title or $document->path }}</b></span>
                                             </a>
                                         </li>
                                     @endforeach

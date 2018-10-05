@@ -1,6 +1,6 @@
 <?php
 
-    Route::get('clients', 'ClientController@index')->name('clients');
+    Route::get('clients', 'ClientController@index')->name('clients.index');
 
     Route::get('clients/create', 'ClientController@create')->name('client.create');
 

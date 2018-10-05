@@ -6,7 +6,6 @@ $(document).ready(function () {
         el.chosen({
             no_results_text: "Ничего не найдено!"
         });
-
         loadCategories();
         loadRegions();
 
@@ -80,7 +79,7 @@ $(document).ready(function () {
     }
 
     function fillCities(response) {
-        let el = $('#cities');
+        let el = $('input#cities');
 
         if (response) {
             el.empty();

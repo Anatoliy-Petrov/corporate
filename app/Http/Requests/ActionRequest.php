@@ -22,8 +22,6 @@ class ActionRequest extends FormRequest
             'finish_at' => 'required',
             'photo' => 'image|mimes:jpeg,bmp,png,jpg|max:5000',
             'wide_photo' => 'image|mimes:jpeg,bmp,png,jpg|max:5000',
-            'city_id' => 'required',
-            'region_id' => 'required'
         ];
     }
 

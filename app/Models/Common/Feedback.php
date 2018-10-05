@@ -13,6 +13,17 @@ class Feedback extends Model
     protected $fillable = [
         'name',
         'body',
-        'city'
+        'city',
+        'date'
     ];
+
+    public function setDateAttribute($value)
+    {
+        $this->attributes['date'] = date('Y-m-d', strtotime($value));
+    }
+
+    public function getDateAttribute($value)
+    {
+        return date('d-m-Y', strtotime($value));
+    }
 }

@@ -2,7 +2,8 @@ $(document).ready(function(){
 
     //init datepicker
     $('.datepicker').datepicker({
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        setDate: new Date()
     });
 
     //delete image from action gallery

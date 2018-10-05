@@ -16,7 +16,10 @@
            class="form-group"  enctype="multipart/form-data">
 
         {{ csrf_field() }}
-        @if(isset($news)) {{ method_field('put') }} @endif
+        @if(isset($news))
+            {{ method_field('put') }}
+            <input type="hidden" name="url" value="{{ url()->previous() }}">
+        @endif
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
@@ -33,13 +36,23 @@
                         <div class="form-group">
                             <label>Заголовок новости</label>
                             <input type="text" name="title_ru" class="form-control"
-                                   value="{{ isset($news) ? $news->title_ru : old('title_ru') }}" >
+                                   @isset($news)
+                                        value="{{ old('title_ru') ? old('title_ru') : $news->title_ru }}"
+                                   @else
+                                        value="{{ old('title_ru') }}"
+                                   @endisset
+                            >
                         </div>
 
                         <div class="form-group">
                             <label>Описание новости</label>
-                            <textarea name="description_ru" class="form-control" id="description_ru"
-                                      rows="5">{{ isset($news) ? $news->description_ru : old('description_ru') }}</textarea>
+                            <textarea name="description_ru" class="form-control" id="description_ru" rows="5">
+                                @isset($news)
+                                    {{ old('description_ru') ? old('description_ru') : $news->description_ru }}
+                                @else
+                                    {{ old('description_ru') }}
+                                @endisset
+                            </textarea>
                         </div>
                         @isset($news)
                             @include('admin.includes.seo_tags_ru', array('page' => $news ))
@@ -53,13 +66,23 @@
                         <div class="form-group">
                             <label>Заголовок новости <small>(украинский вариант)</small></label>
                             <input type="text" name="title_uk" class="form-control"
-                                   value="{{ isset($news) ? $news->title_uk : old('title_uk') }}" required>
+                               @isset($news)
+                                   value="{{ old('title_uk') ? old('title_uk') : $news->title_uk }}"
+                               @else
+                                   value="{{ old('title_uk') }}"
+                                @endisset
+                            >
                         </div>
 
                         <div class="form-group">
                             <label>Описание новости <small>(украинский вариант)</small></label>
-                            <textarea name="description_uk" class="form-control" id="description_uk"
-                                      rows="5">{{ isset($news) ? $news->description_uk : old('description_uk') }}</textarea>
+                            <textarea name="description_uk" class="form-control" id="description_uk" rows="5">
+                                @isset($news)
+                                    {{ old('description_uk') ? old('description_uk') : $news->description_uk }}
+                                @else
+                                    {{ old('description_uk') }}
+                                @endisset
+                            </textarea>
                         </div>
 
                         @isset($news)
@@ -86,65 +109,90 @@
                 </div>
                 <div class="form-group">
                     <label for="">Область</label>
-                    <select name="region_id" id="region" class="form-control"
-                            data-selected="{{ isset($news) ? $news->region_id : '' }}">
-                        <option value="0">Выберите область</option>
+
+                    <select name="region_id[]" id="region" class="form-control chosen-select" multiple data-placeholder="Выберите регион">
+                        @php $selected = false @endphp
+
                         @foreach($regions as $region)
-                            <option value="{{$region->id}}">{{ $region->title_ru }}</option>
+
+                            @isset($news)
+                                @foreach($news->region as $item)
+                                    @if($region->id == $item->id)
+                                        @php $selected = true @endphp
+                                    @endif
+                                @endforeach
+                            @endisset
+
+                            @if($selected)
+                                <option selected value="{{ $region->id }}">{{ $region->title_ru }}</option>
+                            @else
+                                <option value="{{ $region->id }}">{{ $region->title_ru }}</option>
+                            @endif
+
+                            @php $selected = false @endphp
                         @endforeach
                     </select>
+
                 </div>
                 <div class="form-group">
                     <label for="">Город</label>
-                    <select name="city_id" id="city" class="form-control"
-                            data-selected="{{ isset($news) ? $news->city_id : '' }}">
-                        <option value="0">Выберите город</option>
+
+                    <select name="city_id[]" id="city"  class="form-control chosen-select" multiple data-placeholder="Выберите город">
+                        @isset($cities)
+                            @foreach($cities as $city)
+                                <option value="{{ $city->id }}" selected data-region="{{ $city->region_id }}">{{ $city->title_ru }}</option>
+                            @endforeach
+                        @endisset
                     </select>
+
                 </div>
                 <div class="form-group">
                     <label for="">Алиас</label>
-                    <input type="text" name="alias"  class="form-control" value="@if(isset($news)) {{ $news->alias }} @endif">
+                    <input type="text" name="alias"  class="form-control" value="@isset($news)) {{ $news->alias }} @endisset">
                     <small class="red">не заполнять если не уверены</small>
                 </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-4">
                 <div class="form-group">
-                    <h5>Титульное изображение</h5>
-                    <span><small>будет отображаться в списке новостей</small></span>
+                    <label for="">Ссылка на youtube</label>
+                    <input type="text" name="youtube_link"  class="form-control" value="@if(isset($news)) {{ $news->youtube_link }} @endif">
+                    <small>не обязательно</small>
+                </div>
+                <div class="form-group">
+                    <h5>Титульное изображение *</h5>
+                    <span><small>будет отображаться на странице новости</small></span>
                     <input type="file" name="image" class="form-control" @if(!isset($news)) required @endif>
                 </div>
-            </div>
-            <div class="col-sm-4">
-                <h5>Изображения для галереи</h5>
-                <span><small>не обязательно для заполнения</small></span>
-                <input class="form-control" type="file" name="images[]" multiple />
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="col-sm-4">
+                <div class="form-group">
                     @isset($news->image)
-                        <div class="card card-body bg-light">
+                        <div class="card card-body bg-light col-sm-4">
                             <img src="{{ asset('storage/images/news/'.$news->image) }}" alt=""   class="img-fluid">
                         </div>
                     @endisset
                 </div>
-
-            </div>
-
-            <div class="col-sm-4">
-            @if(isset($news) and count($news->images))
-                <div class="clearfix">
-                    @foreach($news->images as $image)
-                        @include('admin.news.image')
-                    @endforeach
+                <div class="form-group">
+                    <h5>Превью изображение</h5>
+                    <span><small>будет отображаться в списке новостей, не обязательно</small></span>
+                    <input type="file" name="image_small" class="form-control">
                 </div>
+                <div class="form-group">
+                    @isset($news->image_small)
+                        <div class="card card-body bg-light col-sm-4">
+                            <img src="{{ asset('storage/images/news/'.$news->image_small) }}" alt="" class="img-fluid">
+                        </div>
+                    @endisset
+                </div>
+                <div class="form-group">
+                    <h5>Изображения для галереи</h5>
+                    <span><small>не обязательно для заполнения</small></span>
+                    <input class="form-control" type="file" name="images[]" multiple />
+                </div>
+                @if(isset($news) and count($news->images))
+                    <div class="clearfix">
+                        @foreach($news->images as $image)
+                            @include('admin.news.image')
+                        @endforeach
+                    </div>
 
-            @endif
+                @endif
             </div>
         </div>
 

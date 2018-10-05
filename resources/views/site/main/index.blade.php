@@ -8,11 +8,11 @@
         {{--баннеры--}}
         @include('site.main.banners')
 
-        {{--Вы получаете--}}
-        @include('site.main.youget')
-
         {{--Под залог и специальные возможности--}}
         @include('site.main.bail')
+
+        {{--Вы получаете--}}
+        @include('site.main.youget')
 
         {{--Акции--}}
         @include('site.main.actions')

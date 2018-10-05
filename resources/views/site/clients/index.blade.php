@@ -1,5 +1,7 @@
 @extends('site.layouts.app')
 
+@include('site.includes.meta_tags')
+
 @section('content')
 
     <!-- Start of page code insertion here -->
@@ -45,7 +47,7 @@
                                 <div class="description-container flex column">
                                     <h2 class="title article-title"><a href="{{ route('clients.show',  $client->alias) }}">{{ $client['title_'.$locale] }}</a></h2>
                                     <div class="description">
-                                        <p class="">{{ htmlspecialchars_decode(str_limit($client['description_'.$locale], 155)) }}</p>
+                                        <p class="">{!! htmlspecialchars_decode(str_limit($client['description_'.$locale], 155)) !!}</p>
                                     </div>
                                 </div>
                             </div>

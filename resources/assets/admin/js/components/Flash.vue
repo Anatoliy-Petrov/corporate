@@ -20,7 +20,6 @@
         created(){
             if (this.message){
                 this.flash(this.message, this.classname);
-                console.log(this.message)
             }
 
             var _this = this;

@@ -17,7 +17,7 @@
                 <a class="nav-link active" id="ru-tab" data-toggle="tab" href="#ru" role="tab" aria-controls="ru" aria-selected="true">русский</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="uk-tab" data-toggle="tab" href="#uk" role="tab" aria-controls="uk" aria-selected="false">украинский</a>
+                <a class="nav-link" id="uk-tab" data-toggle="tab" href="#uk" role="tab" aria-controls="uk" aria-selected="false">украинский <img src="/img/ua.svg" alt="" style="width: 1.5em;"></a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -27,13 +27,12 @@
                         <div class="form-group">
                             <label>Заголовок *</label>
                             <input type="text" name="title_ru" class="form-control"
-                                   value="{{ isset($page) ? $page->title_ru : old('title_ru') }}" >
+                                   value="{{ old('title_ru') ? old('title_ru') : $page->title_ru }}" >
                         </div>
 
                         <div class="form-group">
                             <label>Описание *</label>
-                            <textarea name="description_ru" class="form-control"
-                                      rows="5">{{ isset($page) ? $page->description_ru : old('description_ru') }}</textarea>
+                            <textarea name="description_ru" class="form-control" rows="5">{{ old('description_ru') ? old('description_ru') : $page->description_ru }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -44,13 +43,12 @@
                         <div class="form-group">
                             <label>Заголовок * <small>(украинский вариант)</small></label>
                             <input type="text" name="title_uk" class="form-control"
-                                   value="{{ isset($page) ? $page->title_uk : old('title_uk') }}" required>
+                                   value="{{ old('title_uk') ? old('title_uk') : $page->title_uk }}">
                         </div>
 
                         <div class="form-group">
                             <label>Описание * <small>(украинский вариант)</small></label>
-                            <textarea name="description_uk" class="form-control"
-                                      rows="5">{{ isset($page) ? $page->description_uk : old('description_uk') }}</textarea>
+                            <textarea name="description_uk" class="form-control" rows="5">{{ old('description_uk') ? old('description_uk') : $page->description_uk }}</textarea>
                         </div>
                     </div>
                 </div>

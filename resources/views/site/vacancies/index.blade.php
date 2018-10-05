@@ -89,16 +89,18 @@
                                     <div class="description">
                                         {!! $vacancy['description_'.$locale] !!}
 
+                                        @isset($vacancy->link )
                                         <p>
-                                        <div class="more-button credit-button inversed">
-                                            <div class="more-button-wrapper">
-                                                <div class="more-button-container">
-                                                    <a href="#" class="title semi-bold">{{ __('main.send_resume') }}</a>
-                                                    <i class="icomoon standard-arrow-icon inversed"></i>
+                                            <div class="more-button credit-button inversed">
+                                                <div class="more-button-wrapper">
+                                                    <div class="more-button-container">
+                                                        <a href="{{ $vacancy->link }}" rel="nofollow" target="_blankпше " class="title semi-bold">{{ __('main.send_resume') }}</a>
+                                                        <i class="icomoon standard-arrow-icon inversed"></i>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         </p>
+                                        @endisset
 
 
                                     </div>
@@ -106,7 +108,7 @@
                             </div>
                         </li>
                         @empty
-
+                            Извините, на текущий момент нет вакансий
                         @endforelse
                     </ul>
                 </div>

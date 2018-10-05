@@ -141,7 +141,7 @@ $(document).ready(function () {
     }
 
     function setLocation(location) {
-        $('input[name="address_ua"]').val(location[0].address_components[1].long_name + ', ' + location[0].address_components[0].long_name);
+        $('input[name="address_uk"]').val(location[0].address_components[1].long_name + ', ' + location[0].address_components[0].long_name);
     }
 
 ///Chosen init
@@ -161,8 +161,10 @@ $(document).ready(function () {
     function initRegion(id) {
         var el = $('#region');
         el.chosen().change(function () {
-            if (typeof el.chosen().val() !== 'undefined')
+            if (typeof el.chosen().val() !== 'undefined') {
+                $('#city').removeClass('fillable');
                 initCities(el.chosen().val());
+            }
         });
     }
 
@@ -178,17 +180,25 @@ $(document).ready(function () {
     }
 
     function fetchCities(response) {
-        var el = $('#city');
+        let el = $('#city');
         el.chosen({
             no_results_text: "Ничего не найдено!"
         });
 
         if (response) {
-            clear();
-            _.map(response.data, function (item) {
-                el.append('<option value="' + item.id + '">' + item.title_ru + '</option>');
-            });
-            el.trigger("chosen:updated");
+            let cities_selected = $('#city').chosen().val();
+
+            if (!el.hasClass('fillable')) {
+                clear();
+
+                _.map(response.data, function (item) {
+                    el.append('<option value="' + item.id + '">' + item.title_ru + '</option>');
+                });
+
+                el.val(cities_selected);
+
+                el.trigger("chosen:updated");
+            }
         }
     }
 
@@ -205,6 +215,17 @@ $(document).ready(function () {
     function markSelectedRegion() {
         let el = $('#region');
         $('#region > option[value="' + el.data('selected') + '"]').attr("selected", "selected");
+
+        if ($('#city option:selected').length && $('#city').hasClass('fillable')) {
+
+            let ids = $('#city option:selected').map(function () {
+                return $(this).data('region');
+            }).get();
+
+            el.val(ids);
+            el.removeClass('fillable');
+        }
+
         el.trigger("chosen:updated");
     }
 
@@ -222,10 +243,10 @@ $(document).ready(function () {
         $('.time_start').timepicker({
             timeFormat: 'H:mm',
             interval: 60,
-            minTime: '9:00',
+            minTime: '8:00',
             maxTime: '12:00',
             defaultTime: el_start.val() ? el_start.val() : '9',
-            startTime: '9:00',
+            startTime: '8:00',
             dynamic: false,
             dropdown: true,
             scrollbar: true

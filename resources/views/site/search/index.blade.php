@@ -27,7 +27,7 @@
                             @foreach($results as $result)
                                 <li>
                                     <p class="description-title title"><a href="{{ route($result['type'].'.show', [$result['alias']]) }}" class="underline">{{ $result['title_'.$locale] }}</a></p>
-                                    <p>{{ $result['description_'.$locale] }}</p>
+                                    <p>{!! mb_strimwidth(strip_tags($result['description_'.$locale]), 0, 300) !!}</p>
                                 </li>
                             @endforeach
                         </ul>

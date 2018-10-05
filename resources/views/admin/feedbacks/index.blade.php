@@ -38,7 +38,7 @@
                     <td>{{ $loop->iteration }}</td>
                     <td><a href="{{ route('feedbacks.edit', ['id' => $feedback->id]) }}">{{ $feedback->name }}</a></td>
                     <td>{{ str_limit(strip_tags($feedback->body) , 40)}}</td>
-                    <td>{{ $feedback->created_at }}</td>
+                    <td>{{ $feedback->date }}</td>
                     <td>
                         @if( $feedback->published == 1)
                             <span class="badge badge-success">Опубликовано</span>

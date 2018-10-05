@@ -12,14 +12,15 @@ class DatabaseRepository implements SearchRepository
        $news =  News::where(function ($query) use ($search) {
             return $this->getConditions($query, $search);
         })
-            ->get(['id', 'title_ru', 'title_uk', 'description_ru', 'description_uk', 'type']);
+            ->get(['id', 'title_ru', 'title_uk', 'description_ru', 'description_uk', 'type', 'alias']);
 
         $actions =  Action::where(function ($query) use ($search) {
             return $this->getConditions($query, $search);
         })
-            ->get(['id', 'title_ru', 'title_uk', 'description_ru', 'description_uk', 'type']);
+            ->get(['id', 'title_ru', 'title_uk', 'description_ru', 'description_uk', 'type', 'alias']);
 
         $all = new Collection;
+        $all = $all->merge($news)->merge($actions);
         return $all = $all->merge($news)->merge($actions);
 
     }

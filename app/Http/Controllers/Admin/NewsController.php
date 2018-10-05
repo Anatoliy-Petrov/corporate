@@ -11,12 +11,20 @@ use App\Http\Controllers\Controller;
 
 class NewsController extends Controller
 {
+    private $paginate = 15;
+
     public function index(Request $request)
     {
-        $paginate = 10;
-        $page = $request->has('page') ? $request->page*$paginate-$paginate : 0;
-        $news = News::with('region', 'city')->orderBy('updated_at', 'desc')->paginate($paginate);
+        $page = $request->has('page') ? $request->page*$this->paginate-$this->paginate : 0;
 
+        if ($request->has('q')){
+            $news = News::where('title_ru', 'like', "%{$request->q}%")
+                ->orWhere('title_uk', 'like', "%{$request->q}%")
+                ->with('region', 'city')
+                ->paginate($this->paginate);
+        } else {
+            $news = News::with('region', 'city')->latest()->paginate($this->paginate);
+        }
         return view('admin.news.index', compact('news', 'page'));
     }
 
@@ -31,8 +39,9 @@ class NewsController extends Controller
     {
         $news = News::findOrFail($id);
         $regions = Region::published()->get();
+        $cities = $news->city;
 
-        return view('admin.news.create', compact('news', 'regions'));
+        return view('admin.news.create', compact('news', 'regions', 'cities'));
     }
 
     public function store(CommonRequest $request)
@@ -41,23 +50,31 @@ class NewsController extends Controller
 
         $this->saveNews($request, $news);
 
+        $news->storeUnionTable($request);
+
         return redirect()->route('news.index')
             ->with(['message' => 'Новость сохранена', 'class' => 'success']);
     }
 
     public function update(CommonRequest $request, $id)
     {
-        $news = News::findOrFail($id);
+        $news = News::find($id);
 
-        $this->saveNews($request, $news);
+        $marked = $this->saveNews($request, $news);
 
-        return redirect()->route('news.index')
-            ->with(['message' => 'Новость сохранена', 'class' => 'success']);
+        $news->storeUnionTable($request, true);
+
+        if (basename($request->url) == 'login'){
+            return redirect()->route('news.index')
+                ->with(['message' => 'Новость сохранена', 'class' => 'success', 'marked' => $marked->id]);
+        }
+        return redirect($request->url)
+            ->with(['message' => 'Новость сохранена', 'class' => 'success', 'marked' => $marked->id]);
     }
 
     private function saveNews($request, $news)
     {
-        $input = $request->except('_token', '_method', 'images');
+        $input = $request->except('_token', '_method', 'images', 'url', 'region_id', 'city_id');
         $input['alias'] = $request->alias ? $request->alias : str_slug($request->title_ru);
         if ($request->has('image')) {
 
@@ -66,6 +83,14 @@ class NewsController extends Controller
             $input['image'] = $news->saveWithThumbnail($request->image, 'news', 650, 500, 418, 243);
         } else {
             $input['image'] = $news->image;
+        }
+        if ($request->has('image_small')) {
+
+            $news->deleteImage($news->image_small, 'news');
+
+            $input['image_small'] = $news->saveImage($request->image_small, 'news', 418, 243);
+        } else {
+            $input['image_small'] = $news->image_small;
         }
 
         $news->fill($input);
@@ -79,6 +104,7 @@ class NewsController extends Controller
                 $news->addImage($imageName);
             }
         }
+        return $news;
     }
 
     public function destroyAll(Request $request)

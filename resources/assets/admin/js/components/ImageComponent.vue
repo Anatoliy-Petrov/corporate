@@ -15,7 +15,6 @@
 
                     if (response.data.class == 'success'){
                         $(_this.$el).fadeOut(400);
-                        console.log(response.data.message, response.data.class);
                         window.flash(response.data.message, response.data.class);
                     }
                 });

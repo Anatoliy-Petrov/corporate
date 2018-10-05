@@ -1,4 +1,4 @@
-<section class="pageSection servicesSection white-bg">
+<section class="pageSection servicesSection">
     <div class="mcontainer">
         <div class="animated-border-block section-title">
             <div class="svg-container">

@@ -33,7 +33,7 @@
 
                     <div class="contentRow">
                         <h2 class="title">{{ __('main.from') }} {{ \Jenssegers\Date\Date::parse($action->start_at)->format('d F ') }} {{ __('main.to') }} {{ \Jenssegers\Date\Date::parse($action->finish_at)->format('d F Y') }}</h2>
-                        <div class="description">
+                        <div class="description mcol-xs-12 mcol-md-7">
                             {!! $action['description_'.$locale] !!}
                         </div>
                     </div>
@@ -48,7 +48,9 @@
                     <div class="contentRow images-row mrow flex wrap ">
                         @forelse($action->images as $image)
                         <div class="imgWrapper mcol-xs-6 mcol-sm-4 mcol-md-3">
-                            <img src="{{ '/storage/images/action/'.$image->path }}" alt="img">
+                            <a class="colorbox" href="{{ '/storage/images/action/'.$image->path }}" data-rel="group{{$loop->iteration}}">
+                                <img src="{{ '/storage/images/action/'.$image->path }}" alt="img">
+                            </a>
                         </div>
                             @empty
                         @endforelse

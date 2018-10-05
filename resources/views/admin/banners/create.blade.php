@@ -20,10 +20,10 @@
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="ru-tab" data-toggle="tab" href="#ru" role="tab" aria-controls="ru" aria-selected="true">русский</a>
+                <a class="nav-link active" id="ru-tab" data-toggle="tab" href="#ru" role="tab" aria-controls="ru" aria-selected="true">русский <img src="/img/ru.svg" alt="" style="width: 1.5em;"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="uk-tab" data-toggle="tab" href="#uk" role="tab" aria-controls="uk" aria-selected="false">украинский</a>
+                <a class="nav-link" id="uk-tab" data-toggle="tab" href="#uk" role="tab" aria-controls="uk" aria-selected="false">украинский <img src="/img/ua.svg" alt="" style="width: 1.5em;"></a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -33,13 +33,17 @@
                         <div class="form-group">
                             <label>Заголовок *</label>
                             <input type="text" name="title_ru" class="form-control"
-                                   value="{{ isset($banner) ? $banner->title_ru : old('title_ru') }}" >
+                                   @isset($banner)
+                                   value="{{ old('title_ru') ? old('title_ru') : $banner->title_ru }}"
+                                   @else
+                                   value="{{ old('title_ru') }}"
+                                    @endisset
+                            >
                         </div>
 
                         <div class="form-group">
                             <label>Описание *</label>
-                            <textarea name="description_ru" id="description_ru" class="form-control"
-                                      rows="5">{{ isset($banner) ? $banner->description_ru : old('description_ru') }}</textarea>
+                            <textarea name="description_ru" id="description_ru" class="form-control" rows="5">@isset($banner){{ old('description_ru') ? old('description_ru') : $banner->description_ru }}@else{{ old('description_ru') }}@endisset</textarea>
                         </div>
                     </div>
                 </div>
@@ -50,13 +54,17 @@
                         <div class="form-group">
                             <label>Заголовок *  <small>(украинский вариант)</small></label>
                             <input type="text" name="title_uk" class="form-control"
-                                   value="{{ isset($banner) ? $banner->title_uk : old('title_uk') }}">
+                            @isset($banner)
+                                value="{{ old('title_uk') ? old('title_uk') : $banner->title_uk }}"
+                            @else
+                                   value="{{ old('title_uk') }}"
+                            @endisset
+                            >
                         </div>
 
                         <div class="form-group">
                             <label>Описание * <small>(украинский вариант)</small></label>
-                            <textarea name="description_uk" id="description_ru" class="form-control"
-                                      rows="5">{{ isset($banner) ? $banner->description_uk : old('description_uk') }}</textarea>
+                            <textarea name="description_uk" id="description_ru" class="form-control" rows="5">@isset($banner){{ old('description_uk') ? old('description_uk') : $banner->description_uk }}@else{{ old('description_uk') }}@endisset</textarea>
                         </div>
                     </div>
                 </div>
@@ -73,7 +81,13 @@
                 <div class="form-group">
                     <label>Ссылка *</label>
                     <input type="text" name="link" class="form-control"
-                           value="{{ isset($banner) ? $banner->link : old('link') }}" >
+                       @isset($banner)
+                            value="{{ old('link') ? old('link') : $banner->link }}"
+                       @else
+                            value="{{ old('link') }}"
+                        @endisset
+                    >
+
                 </div>
             </div>
             <div class="col-sm-4">

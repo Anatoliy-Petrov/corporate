@@ -2,16 +2,16 @@
     <div class="popupContentWrapper">
 
         <header class="modalHeader relative">
-            <div class="modal-title title">Спасибо за отклик!</div>
+            <div class="modal-title title">{{ trans('main.thanks_for_feedback') }}</div>
         </header>
 
         <div class="popUpContainer">
             <div class="description contentRow">
-                <p>Мы вам перезвоним в ближайшее время.</p>
+                <p>{{ trans('main.we_will_call') }}</p>
             </div>
 
             <div class="buttonWrapper contentRow">
-                <a href="{{ route('actions') }}" class="standardButton white">Все акции</a>
+                <a href="{{ route('actions') }}" class="standardButton white">{{ trans('main.all_actions') }}</a>
             </div>
         </div>
     </div>

@@ -3,6 +3,14 @@ showActiveElement();
 
 $(document).ready(function () {
 
+    // qr code upload
+
+    $(".upload_code_link").on('click', function(e){
+        e.preventDefault();
+        // $(".upload_code_input:hidden").trigger('click');
+        $(this).next(".upload_code_input:hidden").trigger('click');
+    });
+
     //sidebar
     $('a.dropdown-toggle').on('click', function(){
 
@@ -107,6 +115,100 @@ $(document).ready(function () {
         })
     });
 
+    /**  поиск по новостям  **/
+    $('#searchInputButton').click(function () {
+        url = '/admin/news?q=' + $('#searchInputField').val();
+        window.location.assign(url);
+    });
+    $('#searchInputField').on('keyup', function (e) {
+        if(e.keyCode === 13){
+            url = '/admin/news?q=' + $('#searchInputField').val();
+            window.location.assign(url);
+        }
+    });
+
+    /**  поиск по технике  **/
+    $('#searchGadgetButton').click(function () {
+        url = '/admin/calculator/gadgets?q=' + $('#searchGadgetField').val();
+        window.location.assign(url);
+    });
+    $('#searchGadgetField').on('keyup', function (e) {
+        if(e.keyCode === 13){
+            url = '/admin/calculator/gadgets?q=' + $('#searchGadgetField').val();
+            window.location.assign(url);
+        }
+    });
+
+    /**  поиск по отделениям  **/
+
+    $('#searchOfficeButton').click(function () {
+        url = '/admin/offices?q=' + $('#searchOfficeField').val();
+        window.location.assign(url);
+    });
+    $('#searchOfficeField').on('keyup', function (e) {
+        if(e.keyCode === 13){
+            url = '/admin/offices?q=' + $('#searchOfficeField').val();
+            window.location.assign(url);
+        }
+    });
+
+    /**   calculator    **/
+
+    // $('#hallmarksTable').css('display', 'none');
+    //
+    // $('#exampleModalCenter').on('shown.bs.modal', function () {
+    //     $('#no_hallmark').css('display', 'none');
+    //     $('#hallmark').chosen('destroy');
+    //
+    //     // $('#type_hallmark').css('display', 'block');
+    //     console.log('here');
+    //     $('#hallmark').chosen();
+    // });
+    // $('#hallmark').change(function () {
+    //     if ($('#hallmark').val() != 0){
+    //         $('#saveHallmarkButton').prop("disabled", false);
+    //     }
+    //     if ($('#hallmark').val() == 0){
+    //         $('#saveHallmarkButton').prop("disabled", true);
+    //     }
+    //
+    // });
+    // added_hallmarks = [];
+    // $('#saveHallmarkButton').click(function () {
+    //     // var added_hallmarks = [];
+    //     var template = $('#table_template').html();
+    //     var hallmark = $('#hallmark').val();
+    //     // var category = $('#calc_category').text();
+    //     var category = $('#calc_category option:selected').text();
+    //
+    //     if (added_hallmarks.indexOf(parseInt(hallmark)) == -1){
+    //
+    //         console.log(added_hallmarks.indexOf(hallmark));
+    //         added_hallmarks.push(parseInt(hallmark));
+    //         var hallmark_text = $('#hallmark option:selected').text();
+    //         var new_temp = template.replace(/X/g, hallmark);
+    //         var new_template = new_temp.replace('Y', hallmark_text);
+    //
+    //         $('#hallmarksTable').css('display', 'block').append(new_template);
+    //         $('#category_block_disabled').show();
+    //         $('#category_block').hide();
+    //         $('#category_name').text(category);
+    //         // $('#category_block').css('display', 'none');
+    //         // $('#calc_category').prop("disabled", true);
+    //         $('.modal').modal("hide");
+    //     } else {
+    //         alert('Такая проба уже есть.');
+    //     }
+    // });
+    // $('body').on('click', '.deleteHallmark', function() {
+    //     var tr = $(this).closest('tr');
+    //     var hallmark = tr.data('hallmark');
+    //     // var position = $.inArray(hallmark, added_hallmarks);
+    //     position = added_hallmarks.indexOf(hallmark);
+    //
+    //     if ( ~position ) added_hallmarks.splice(position, 1);
+    //     tr.remove();
+    // });
 
 });
 

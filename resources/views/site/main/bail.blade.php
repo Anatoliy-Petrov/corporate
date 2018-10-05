@@ -1,4 +1,4 @@
-<section class="pageSection pledgeSection">
+<section class="pageSection pledgeSection white-bg">
     <div class="mcontainer">
         <div class="animated-border-block section-title">
             <div class="svg-container">
@@ -10,20 +10,20 @@
             </div>
         </div>
 
-        <div class="sectionBlock">
+        <div class="sectionBlock mainBlock">
             <div class="mrow flex wrap">
                 @forelse($bails as $bail)
                     <article class="mcol-xs-12 mcol-sm-6 mcol-md-4">
                         <div class="item pledge-item main">
-                            <a href="#" class="absolute stretch overlay-link"></a>
+                            <a href="{{ route('calculator') }}" class="absolute stretch overlay-link"></a>
                             <div class="default-icon imgWrapper absolute">
-                                <img src="img/icons/ring.svg" alt="ring">
-{{--                                <img src="{{ asset('storage/images/main/'.$bail->image_bw) }}" alt="{{ $bail->title_ru }}">--}}
+                                {{--<img src="img/icons/ring.svg" alt="ring">--}}
+                                <img src="{{ asset('storage/images/main/'.$bail->image_bw) }}" alt="{{ $bail->title_ru }}">
                             </div>
 
                             <div class="color-icon imgWrapper absolute">
-                                <img src="img/icons/ring_2.png" alt="ring">
-                                {{--<img src="{{ asset('storage/images/main/'.$bail->image) }}" alt="{{ $bail->title_ru }}">--}}
+                                {{--<img src="img/icons/ring_2.png" alt="ring">--}}
+                                <img src="{{ asset('storage/images/main/'.$bail->image) }}" alt="{{ $bail->title_ru }}">
                             </div>
 
                             <div class="gold-container imgWrapper absolute">
@@ -31,7 +31,7 @@
                             </div>
 
                             <div class="calculate-button-container">
-                                <span href="#" class="title">{{ trans('main.calculate') }} <i class="icomoon standard-arrow-icon inversed"></i></span>
+                                <span href="" class="title">{{ trans('main.calculate') }} <i class="icomoon standard-arrow-icon inversed"></i></span>
                             </div>
 
                             <div class="description-container">

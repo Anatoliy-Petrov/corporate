@@ -12,7 +12,7 @@ class FaqController extends Controller
 {
     public function index(Request $request)
     {
-        $paginate = 10;
+        $paginate = 15;
         $faqs = Faq::with('category')->paginate($paginate);
         $page = $request->has('page') ? $request->page*$paginate-$paginate : 0;
 
@@ -45,9 +45,9 @@ class FaqController extends Controller
 
     public function update(CommonRequest $request, $id)
     {
-        Faq::where('id', $id)->update($request->except('_token', '_method'));
+        Faq::where('id', $id)->update($request->except('_token', '_method', 'url'));
 
-        return redirect()->route('faqs.index')
+        return redirect($request->url)
             ->with(['message' => 'Вопрос сохранён', 'class' => 'success']);
     }
 
